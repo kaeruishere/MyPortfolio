@@ -8,12 +8,12 @@
 // ============================================================
 
 export const firebaseConfig = {
-  apiKey: "AIzaSyARU7Dj4-rmlOrYOtHIHfSutc3m19OA1jQ",
-  authDomain: "my-portfolio-kaeru.firebaseapp.com",
-  projectId: "my-portfolio-kaeru",
-  storageBucket: "my-portfolio-kaeru.firebasestorage.app",
-  messagingSenderId: "1014890418465",
-  appId: "1:1014890418465:web:d105aafa2088ca71dbee60"
+    apiKey: "%%FIREBASE_API_KEY%%",
+    authDomain: "%%FIREBASE_AUTH_DOMAIN%%",
+    projectId: "%%FIREBASE_PROJECT_ID%%",
+    storageBucket: "%%FIREBASE_STORAGE_BUCKET%%",
+    messagingSenderId: "%%FIREBASE_MESSAGING_ID%%",
+    appId: "%%FIREBASE_APP_ID%%"
 };
 
 // ============================================================
