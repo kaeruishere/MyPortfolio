@@ -10,12 +10,12 @@ jobs:
       - uses: actions/checkout@v4
       - name: Inject Firebase config
         run: |
-          sed -i 's/%%FIREBASE_API_KEY%%/${{ secrets.FIREBASE_API_KEY }}/g' public/firebase-config.js
-          sed -i 's/%%FIREBASE_AUTH_DOMAIN%%/${{ secrets.FIREBASE_AUTH_DOMAIN }}/g' public/firebase-config.js
-          sed -i 's/%%FIREBASE_PROJECT_ID%%/${{ secrets.FIREBASE_PROJECT_ID }}/g' public/firebase-config.js
-          sed -i 's/%%FIREBASE_STORAGE_BUCKET%%/${{ secrets.FIREBASE_STORAGE_BUCKET }}/g' public/firebase-config.js
-          sed -i 's/%%FIREBASE_MESSAGING_ID%%/${{ secrets.FIREBASE_MESSAGING_ID }}/g' public/firebase-config.js
-          sed -i 's/%%FIREBASE_APP_ID%%/${{ secrets.FIREBASE_APP_ID }}/g' public/firebase-config.js
+          sed -i 's/%%FIREBASE_API_KEY%%/${{ secrets.FIREBASE_API_KEY }}/g' firebase-config.js
+          sed -i 's/%%FIREBASE_AUTH_DOMAIN%%/${{ secrets.FIREBASE_AUTH_DOMAIN }}/g' firebase-config.js
+          sed -i 's/%%FIREBASE_PROJECT_ID%%/${{ secrets.FIREBASE_PROJECT_ID }}/g' firebase-config.js
+          sed -i 's/%%FIREBASE_STORAGE_BUCKET%%/${{ secrets.FIREBASE_STORAGE_BUCKET }}/g' firebase-config.js
+          sed -i 's/%%FIREBASE_MESSAGING_ID%%/${{ secrets.FIREBASE_MESSAGING_ID }}/g' firebase-config.js
+          sed -i 's/%%FIREBASE_APP_ID%%/${{ secrets.FIREBASE_APP_ID }}/g' firebase-config.js
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: ${{ secrets.GITHUB_TOKEN }}
