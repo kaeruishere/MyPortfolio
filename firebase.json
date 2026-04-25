@@ -11,11 +11,16 @@
       "firebase.json",
       "**/.*",
       "**/node_modules/**"
+      // Burada app-ads.txt'yi engelleyen bir kural olmadığından emin ol
     ],
     "rewrites": [
       {
         "source": "/admin",
         "destination": "/admin.html"
+      },
+      {
+        "source": "/app-ads.txt",
+        "destination": "/app-ads.txt"
       }
     ]
   }
