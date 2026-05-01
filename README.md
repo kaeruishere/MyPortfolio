@@ -1,14 +1,14 @@
-Proje Hakkında: Portfolio
+# Kişisel Portfolyo
 
-Modern, Firebase destekli, admin panelli kişisel portföy şablonu.
+Geliştirdiğim projeleri, yeteneklerimi ve deneyimlerimi sergilediğim kişisel web sitem.
 
-Temel Özellikler
-  - 🌙 Dark / Light tema
-  - 🌍 TR / EN dil desteği
-  - 🔥 Firebase Firestore ile dinamik içerik
-  - 🔐 Firebase Auth ile güvenli admin paneli
-  - 📂 Proje kategorisi filtresi
-  - 🪟 Proje detay modal
-  - ⭐ Öne çıkan proje desteği
-  - 📱 Tam responsive
-  - 🐙 GitHub repo senkronizasyonu
+## 🚀 Özellikler
+- Modern ve duyarlı tasarım
+- Proje galerisi
+- İletişim formu
+
+## 🛠️ Kullanılan Teknolojiler
+- HTML5
+- CSS3
+- JavaScript
+- Firebase
