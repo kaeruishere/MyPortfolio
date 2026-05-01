@@ -22,6 +22,7 @@ const ICONS = {
   location: '<path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/>',
   link:     '<path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>',
   user:     '<path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>',
+  linkedin: '<path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/>',
 };
 
 function formatDate(dateStr) {
@@ -41,9 +42,9 @@ export function renderNav(data) {
 
   const links = [
     { href: '#about',      key: 'nav_about' },
+    { href: '#education',  key: 'nav_education' },
     { href: '#skills',     key: 'nav_skills' },
     { href: '#projects',   key: 'nav_projects' },
-    { href: '#education',  key: 'nav_education' },
     { href: '#experience', key: 'nav_experience' },
     { href: '#contact',    key: 'nav_contact' },
   ];
@@ -284,7 +285,7 @@ export function renderContact(data) {
   if (socials && m.socials) {
     const socialDefs = [
       { key: 'github',   icon: ICONS.github,   label: 'GitHub' },
-      { key: 'linkedin', icon: ICONS.link,      label: 'LinkedIn' },
+      { key: 'linkedin', icon: ICONS.linkedin, label: 'LinkedIn' },
       { key: 'twitter',  icon: ICONS.external,  label: 'Twitter' },
     ];
     socials.innerHTML = socialDefs

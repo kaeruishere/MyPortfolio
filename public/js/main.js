@@ -138,15 +138,34 @@ function initRevealObserver() {
 
 function initNavScroll() {
   const navbar = document.getElementById('navbar');
+  const backToTop = document.getElementById('back-to-top');
   if (!navbar) return;
 
   const onScroll = () => {
-    if (window.scrollY > 60) {
+    const scrollY = window.scrollY;
+
+    // Navbar scroll effect
+    if (scrollY > 60) {
       navbar.classList.add('scrolled');
     } else {
       navbar.classList.remove('scrolled');
     }
+
+    // Back to top visibility
+    if (backToTop) {
+      if (scrollY > 500) {
+        backToTop.classList.add('visible');
+      } else {
+        backToTop.classList.remove('visible');
+      }
+    }
   };
+
+  if (backToTop) {
+    backToTop.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  }
 
   window.addEventListener('scroll', onScroll, { passive: true });
   onScroll(); // initial check
