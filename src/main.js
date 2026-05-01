@@ -67,11 +67,20 @@ function bindStaticEvents() {
 
     // Mobile menu
     const mobileMenu = document.getElementById('mobile-menu');
-    document.getElementById('mobile-menu-toggle')?.addEventListener('click', () => {
+    const mobileToggle = document.getElementById('mobile-menu-toggle');
+    mobileToggle?.addEventListener('click', () => {
         mobileMenu?.classList.toggle('hidden');
     });
     document.querySelectorAll('.mobile-link').forEach(link => {
         link.addEventListener('click', () => mobileMenu?.classList.add('hidden'));
+    });
+    // Close mobile menu on outside click
+    document.addEventListener('click', (e) => {
+        if (!mobileMenu?.classList.contains('hidden') &&
+            !mobileMenu?.contains(e.target) &&
+            !mobileToggle?.contains(e.target)) {
+            mobileMenu.classList.add('hidden');
+        }
     });
 
     // Scroll → navbar shrink + scroll-to-top
@@ -104,6 +113,12 @@ function bindStaticEvents() {
     document.getElementById('project-modal-backdrop')?.addEventListener('click', closeProjectModal);
     document.getElementById('project-modal-close')?.addEventListener('click', closeProjectModal);
     document.addEventListener('keydown', e => { if (e.key === 'Escape') closeProjectModal(); });
+
+    // Show more / less — sadece bir kez bağlanır
+    document.getElementById('show-more-projects-btn')?.addEventListener('click', () => {
+        state.showAllProjects = !state.showAllProjects;
+        if (state.data) renderProjects(state.data.projects, state.data.sections);
+    });
 }
 
 function updateLangBtn() {
@@ -314,7 +329,7 @@ function renderProjects(allProjects, sections) {
         });
     });
 
-    // Show more button
+    // Show more button — sadece görünürlük + etiket güncellenir, listener burada YOK
     const btn = document.getElementById('show-more-projects-btn');
     const btnWrap = btn?.parentElement;
     if (btnWrap) {
@@ -325,12 +340,6 @@ function renderProjects(allProjects, sections) {
             btn.querySelector('.material-symbols-outlined').textContent = state.showAllProjects ? 'expand_less' : 'expand_more';
         }
     }
-
-    // Bind show more
-    document.getElementById('show-more-projects-btn')?.addEventListener('click', () => {
-        state.showAllProjects = !state.showAllProjects;
-        renderProjects(allProjects, sections);
-    });
 }
 
 function projectCard(project, featured) {
