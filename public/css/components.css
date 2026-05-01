@@ -8,24 +8,46 @@
   right: 0;
   z-index: 100;
   padding: 20px 0;
+  /* Custom spring transition for more dynamic feel */
+  transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+  /* Optimization */
+  will-change: transform, top, padding;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  contain: layout;
+}
+
+#navbar::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
   background: var(--bg-nav);
   backdrop-filter: var(--nav-blur);
   -webkit-backdrop-filter: var(--nav-blur);
-  border-bottom: 1px solid transparent;
-  transition: border-color var(--transition), padding var(--transition);
+  border-radius: inherit;
+  transition: inherit;
+  pointer-events: none;
+  opacity: 0.8; /* Slightly more transparent at top */
 }
 
 #navbar.scrolled {
   padding: 12px 0;
-  top: 16px;
-  left: 20px;
-  right: 20px;
-  width: calc(100% - 40px);
+  top: 12px;
+  left: 12px;
+  right: 12px;
+  width: calc(100% - 24px);
   max-width: var(--max-width);
   margin: 0 auto;
-  border-radius: var(--radius-lg);
-  border: 1px solid var(--border);
-  box-shadow: 0 10px 30px var(--shadow);
+  border-radius: var(--radius-md);
+  border: none;
+  box-shadow: 
+    0 0 0 1px var(--border),
+    0 10px 30px var(--shadow);
+}
+
+#navbar.scrolled::before {
+  opacity: 0.98; /* Almost fully opaque when scrolled */
 }
 
 .nav-inner {
@@ -744,9 +766,9 @@ footer {
   .hero-actions .btn { text-align: center; justify-content: center; }
 
   #navbar.scrolled {
-    left: 12px;
-    right: 12px;
-    width: calc(100% - 24px);
+    left: 8px;
+    right: 8px;
+    width: calc(100% - 16px);
   }
 }
 
