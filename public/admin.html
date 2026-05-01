@@ -44,6 +44,7 @@
         <button class="sidebar-btn" data-tab="experience">deneyim</button>
         <button class="sidebar-btn" data-tab="education">eğitim</button>
         <button class="sidebar-btn" data-tab="contact">iletişim</button>
+        <button class="sidebar-btn" data-tab="chat">sohbetler</button>
       </nav>
       <div class="sidebar-footer">
         <button id="admin-logout-btn" class="sidebar-logout btn-icon danger">çıkış</button>
@@ -411,6 +412,46 @@
           <div class="field-group span-2">
             <label>Alt Başlık / Açıklama (EN)</label>
             <textarea id="contact-desc-en" rows="3" placeholder="Feel free to reach out..."></textarea>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── Tab: Chat ── -->
+      <div id="tab-chat" class="tab-panel">
+        <div class="panel-header desktop-only">
+          <h1>Canlı Destek (Chat)</h1>
+        </div>
+        
+        <div class="admin-chat-layout">
+          <!-- Sol: Ziyaretçi Listesi -->
+          <aside class="admin-chat-sidebar">
+            <div id="admin-users-list">
+              <!-- JS ile dolacak -->
+            </div>
+          </aside>
+
+          <!-- Sağ: Mesajlaşma Alanı -->
+          <div class="admin-chat-main">
+            <div id="admin-chat-header" class="admin-chat-header" style="display:none">
+              <div class="admin-chat-title-wrap">
+                <button id="admin-chat-back" class="btn-icon mobile-only" style="margin-right: 12px;">←</button>
+                <h2 id="admin-chat-title"></h2>
+                <button id="admin-edit-nick" class="btn-icon">✎</button>
+              </div>
+              <div id="admin-nick-editor" style="display:none; gap:8px; margin-top:8px;">
+                <input type="text" id="admin-nick-input" placeholder="Takma isim..." style="flex:1">
+                <button id="admin-nick-save" class="btn btn-primary btn-sm">kaydet</button>
+              </div>
+            </div>
+
+            <div id="admin-messages-container" class="admin-messages-container">
+              <p class="empty-state">Yazışmaya başlamak için soldan birini seçin.</p>
+            </div>
+
+            <div id="admin-input-area" class="admin-input-area" style="display:none">
+              <input type="text" id="admin-reply-input" placeholder="Mesajınızı yazın...">
+              <button id="admin-reply-send" class="btn btn-primary">gönder</button>
+            </div>
           </div>
         </div>
       </div>

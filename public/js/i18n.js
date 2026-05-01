@@ -64,6 +64,10 @@ export const UI_STRINGS = {
     project_code: 'kod',
     exp_current: 'devam ediyor',
     footer_made: 'ile yapıldı',
+    chat_placeholder: 'bir mesaj yazın...',
+    chat_status: 'bağlanılıyor...',
+    chat_status_online: ' Umut Eren Kaplan',
+    chat_send: 'gönder'
   },
   en: {
     nav_about: 'about',
@@ -86,6 +90,10 @@ export const UI_STRINGS = {
     project_code: 'code',
     exp_current: 'present',
     footer_made: 'made with',
+    chat_placeholder: 'write a message...',
+    chat_status: 'connecting...',
+    chat_status_online: ' Umut Eren Kaplan',
+    chat_send: 'send'
   }
 };
 

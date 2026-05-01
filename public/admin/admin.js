@@ -10,7 +10,7 @@ import {
 import {
   doc, getDoc, setDoc, collection,
   getDocs, addDoc, updateDoc, deleteDoc,
-  orderBy, query
+  orderBy, query, serverTimestamp, onSnapshot
 } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
 import { clearCache } from '../js/dataService.js';
 
@@ -94,10 +94,118 @@ async function loadAllData() {
     loadExperience(),
     loadEducation(),
     loadContact(),
+    initAdminChat(),
   ]);
 }
 
-// ── META ─────────────────────────────────────────────────────
+// ── ADMIN CHAT ────────────────────────────────────────────────
+let selectedChatId = null;
+let unsubscribeMessages = null;
+
+function initAdminChat() {
+  const chatLayout = document.querySelector('.admin-chat-layout');
+  const usersList = document.getElementById('admin-users-list');
+  const chatHeader = document.getElementById('admin-chat-header');
+  const chatTitle = document.getElementById('admin-chat-title');
+  const messagesContainer = document.getElementById('admin-messages-container');
+  const inputArea = document.getElementById('admin-input-area');
+  const replyInput = document.getElementById('admin-reply-input');
+  const sendBtn = document.getElementById('admin-reply-send');
+  const editNickBtn = document.getElementById('admin-edit-nick');
+  const nickEditor = document.getElementById('admin-nick-editor');
+  const nickInput = document.getElementById('admin-nick-input');
+  const nickSaveBtn = document.getElementById('admin-nick-save');
+  const backBtn = document.getElementById('admin-chat-back');
+
+  // Sohbetleri Dinle
+  onSnapshot(query(collection(db, 'chats'), orderBy('lastTimestamp', 'desc')), (snapshot) => {
+    usersList.innerHTML = '';
+    snapshot.forEach(doc => {
+      const data = doc.data();
+      const div = document.createElement('div');
+      div.className = `user-item ${data.unread ? 'unread' : ''} ${selectedChatId === doc.id ? 'active' : ''}`;
+      
+      const displayName = data.nickname || `Ziyaretçi (${doc.id.substring(0, 4)})`;
+      
+      div.innerHTML = `
+        <span class="user-name">${displayName}</span>
+        <span class="user-last-msg">${data.lastMessage || 'Yeni mesaj yok'}</span>
+      `;
+      div.onclick = () => selectChat(doc.id, displayName, data.nickname || '');
+      usersList.appendChild(div);
+    });
+  });
+
+  function selectChat(uid, name, nickname) {
+    selectedChatId = uid;
+    chatTitle.textContent = name;
+    chatHeader.style.display = 'block';
+    inputArea.style.display = 'flex';
+    nickEditor.style.display = 'none';
+    nickInput.value = nickname;
+
+    // Mobile View Toggle
+    chatLayout.classList.add('chat-open');
+
+    // Okundu yap
+    updateDoc(doc(db, 'chats', uid), { unread: false });
+
+    if (unsubscribeMessages) unsubscribeMessages();
+
+    unsubscribeMessages = onSnapshot(query(collection(db, 'chats', uid, 'messages'), orderBy('timestamp', 'asc')), (snap) => {
+      messagesContainer.innerHTML = '';
+      snap.forEach(mDoc => {
+        const m = mDoc.data();
+        const mDiv = document.createElement('div');
+        mDiv.className = `chat-msg ${m.sender === 'admin' ? 'msg-user' : 'msg-admin'}`;
+        const time = m.timestamp ? new Date(m.timestamp.toDate()).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : '';
+        
+        mDiv.innerHTML = `
+          <div class="msg-bubble">${m.text}</div>
+          <span class="msg-time">${time}</span>
+        `;
+        messagesContainer.appendChild(mDiv);
+      });
+      messagesContainer.scrollTop = messagesContainer.scrollHeight;
+    });
+  }
+
+  // Mobile Back Button
+  if (backBtn) {
+    backBtn.onclick = () => {
+      chatLayout.classList.remove('chat-open');
+    };
+  }
+
+  editNickBtn.onclick = () => {
+    nickEditor.style.display = nickEditor.style.display === 'none' ? 'flex' : 'none';
+    if (nickEditor.style.display === 'flex') nickInput.focus();
+  };
+
+  nickSaveBtn.onclick = async () => {
+    if (!selectedChatId) return;
+    await updateDoc(doc(db, 'chats', selectedChatId), { nickname: nickInput.value.trim() });
+    nickEditor.style.display = 'none';
+    showToast('Takma isim kaydedildi.');
+  };
+
+  const sendReply = async () => {
+    const text = replyInput.value.trim();
+    if (!text || !selectedChatId) return;
+    replyInput.value = '';
+    await addDoc(collection(db, 'chats', selectedChatId, 'messages'), {
+      text,
+      sender: 'admin',
+      timestamp: serverTimestamp()
+    });
+    await updateDoc(doc(db, 'chats', selectedChatId), { lastTimestamp: serverTimestamp() });
+  };
+
+  sendBtn.onclick = sendReply;
+  replyInput.onkeypress = (e) => { if (e.key === 'Enter') sendReply(); };
+}
+
+// ── Helpers ───────────────────────────────────────────────────
 
 async function loadMeta() {
   const snap = await getDoc(doc(db, 'portfolio', 'meta'));

@@ -6,8 +6,13 @@ import { initTheme, toggleTheme } from './theme.js';
 import { getLang, setLang, toggleLang, onLangChange, ui } from './i18n.js';
 import { fetchPortfolioData } from './dataService.js';
 import { renderAll } from './renderer.js';
+import { initChat } from './chat.js';
 
 // ── Init ─────────────────────────────────────────────────────
+
+document.addEventListener('DOMContentLoaded', () => {
+  initChat();
+});
 
 async function init() {
   // 1. Temayı uygula (flash'ı önlemek için erken)
