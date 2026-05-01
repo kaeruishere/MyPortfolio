@@ -151,7 +151,7 @@ export function renderSkills(data) {
     <div class="skill-category reveal">
       <div class="skill-category-name">${cat}</div>
       <div class="skill-items">
-        ${items.map(s => `<div class="skill-item">${s.name}</div>`).join('')}
+        ${items.map(s => `<div class="skill-item">${t(s, 'name')}</div>`).join('')}
       </div>
     </div>
   `).join('');
