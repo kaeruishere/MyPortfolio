@@ -1,22 +1,13 @@
-# Firebase build and deployment files
-/firebase-debug.log
-/firebase-debug.*.log
+# Dependencies
+node_modules/
+dist/
+.firebase/
 
-
-# Firebase Hosting
-
+# Firebase
+firebase-debug.log
+firebase-debug.*.log
 *.cache
-hosting/.cache
-
-# Firebase Functions
-/functions/node_modules/
-/functions/.env
-/functions/package-lock.json
-
-# Firebase Emulators
-/firebase-*.zip
 /.firebase/
-/emulator-ui/
 
 # Logs
 *.log
@@ -24,5 +15,11 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-# Environment files (local configs)
-/.env.*
+# Environment / Secrets — NEVER COMMIT
+firebase-config.js
+.env
+.env.*
+
+# OS
+.DS_Store
+Thumbs.db

@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="tr" data-theme="dark">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Panel</title>
+  <link rel="stylesheet" href="../css/themes.css">
+  <link rel="stylesheet" href="../css/main.css">
+  <link rel="stylesheet" href="admin.css">
+</head>
+
+<body>
+
+  <!-- ── Auth Gate ── -->
+  <div id="auth-gate">
+    <div class="auth-box">
+      <div class="auth-logo">admin</div>
+      <p class="auth-subtitle">portfolio yönetim paneli</p>
+      <div id="auth-error" class="auth-error" style="display:none"></div>
+      <div class="field-group">
+        <label for="auth-email">e-posta</label>
+        <input type="email" id="auth-email" placeholder="ornek@mail.com" autocomplete="email">
+      </div>
+      <div class="field-group">
+        <label for="auth-password">şifre</label>
+        <input type="password" id="auth-password" placeholder="••••••••" autocomplete="current-password">
+      </div>
+      <button id="auth-login-btn" class="btn btn-primary btn-full">giriş yap</button>
+    </div>
+  </div>
+
+  <!-- ── Admin Panel ── -->
+  <div id="admin-panel" style="display:none">
+
+    <!-- Sidebar -->
+    <aside id="admin-sidebar">
+      <div class="sidebar-logo">~/admin</div>
+      <nav class="sidebar-nav">
+        <button class="sidebar-btn active" data-tab="meta">meta</button>
+        <button class="sidebar-btn" data-tab="about">hakkımda</button>
+        <button class="sidebar-btn" data-tab="skills">beceriler</button>
+        <button class="sidebar-btn" data-tab="projects">projeler</button>
+        <button class="sidebar-btn" data-tab="experience">deneyim</button>
+        <button class="sidebar-btn" data-tab="education">eğitim</button>
+        <button class="sidebar-btn" data-tab="contact">iletişim</button>
+      </nav>
+      <div class="sidebar-footer">
+        <button id="admin-logout-btn" class="sidebar-logout btn-icon danger">çıkış</button>
+        <a href="../index.html" class="sidebar-view-site" target="_blank">siteye git ↗</a>
+      </div>
+    </aside>
+
+    <!-- Content -->
+    <main id="admin-content">
+
+      <!-- Toast -->
+      <div id="admin-toast" class="admin-toast" aria-live="polite"></div>
+
+      <!-- ── Tab: Meta ── -->
+      <div id="tab-meta" class="tab-panel active">
+        <div class="panel-header">
+          <h1>Meta Bilgileri</h1>
+          <button class="btn btn-primary" id="save-meta">kaydet</button>
+        </div>
+        <div class="form-grid">
+          <div class="field-group">
+            <label>İsim</label>
+            <input type="text" id="meta-name" placeholder="Adın Soyadın">
+          </div>
+          <div class="field-group">
+            <label>Nav Logo</label>
+            <input type="text" id="meta-nav-logo" placeholder="~">
+          </div>
+          <div class="field-group">
+            <label>Eyebrow (TR)</label>
+            <input type="text" id="meta-eyebrow-tr" placeholder="merhaba, ben">
+          </div>
+          <div class="field-group">
+            <label>Eyebrow (EN)</label>
+            <input type="text" id="meta-eyebrow-en" placeholder="hello, I'm">
+          </div>
+          <div class="field-group">
+            <label>Unvan (TR)</label>
+            <input type="text" id="meta-title-tr" placeholder="Frontend Developer">
+          </div>
+          <div class="field-group">
+            <label>Unvan (EN)</label>
+            <input type="text" id="meta-title-en" placeholder="Frontend Developer">
+          </div>
+          <div class="field-group span-2">
+            <label>Kısa Açıklama (TR)</label>
+            <textarea id="meta-desc-tr" rows="3" placeholder="Kendin hakkında kısa bir şey..."></textarea>
+          </div>
+          <div class="field-group span-2">
+            <label>Kısa Açıklama (EN)</label>
+            <textarea id="meta-desc-en" rows="3" placeholder="Something short about you..."></textarea>
+          </div>
+          <div class="field-group">
+            <label>CV URL (TR)</label>
+            <input type="url" id="meta-cv-url-tr" placeholder="https://...">
+          </div>
+          <div class="field-group">
+            <label>CV URL (EN)</label>
+            <input type="url" id="meta-cv-url-en" placeholder="https://...">
+          </div>
+          <div class="field-group">
+            <label>GitHub</label>
+            <input type="url" id="meta-github" placeholder="https://github.com/...">
+          </div>
+          <div class="field-group">
+            <label>LinkedIn</label>
+            <input type="url" id="meta-linkedin" placeholder="https://linkedin.com/in/...">
+          </div>
+          <div class="field-group span-2">
+            <label>Twitter/X</label>
+            <input type="url" id="meta-twitter" placeholder="https://twitter.com/...">
+          </div>
+        </div>
+      </div>
+
+      <!-- ── Tab: About ── -->
+      <div id="tab-about" class="tab-panel">
+        <div class="panel-header">
+          <h1>Hakkımda</h1>
+          <button class="btn btn-primary" id="save-about">kaydet</button>
+        </div>
+        <div class="form-grid">
+          <div class="field-group span-2">
+            <label>Fotoğraf URL</label>
+            <input type="url" id="about-photo-url" placeholder="https://...">
+          </div>
+          <div class="field-group span-2">
+            <label>Metin (TR)</label>
+            <textarea id="about-text-tr" rows="6" placeholder="Hakkında metni Türkçe..."></textarea>
+          </div>
+          <div class="field-group span-2">
+            <label>Metin (EN)</label>
+            <textarea id="about-text-en" rows="6" placeholder="About text in English..."></textarea>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── Tab: Skills ── -->
+      <div id="tab-skills" class="tab-panel">
+        <div class="panel-header">
+          <h1>Beceriler</h1>
+          <button class="btn btn-primary" id="add-skill-btn">+ ekle</button>
+        </div>
+        <div id="skills-list" class="items-list"></div>
+
+        <!-- Skill Form Modal -->
+        <div id="skill-modal" class="modal" style="display:none">
+          <div class="modal-box">
+            <div class="modal-header">
+              <h2 id="skill-modal-title">Beceri Ekle</h2>
+              <button class="modal-close" id="skill-modal-close">✕</button>
+            </div>
+            <div class="form-grid">
+              <div class="field-group">
+                <label>Beceri Adı (TR)</label>
+                <input type="text" id="skill-name-tr" placeholder="React">
+              </div>
+              <div class="field-group">
+                <label>Beceri Adı (EN)</label>
+                <input type="text" id="skill-name-en" placeholder="React">
+              </div>
+              <div class="field-group">
+                <label>Kategori (TR)</label>
+                <input type="text" id="skill-category-tr" placeholder="Frontend">
+              </div>
+              <div class="field-group">
+                <label>Kategori (EN)</label>
+                <input type="text" id="skill-category-en" placeholder="Frontend">
+              </div>
+              <div class="field-group span-2">
+                <label>Sıra (order)</label>
+                <input type="number" id="skill-order" placeholder="1" min="0">
+              </div>
+            </div>
+            <input type="hidden" id="skill-edit-id">
+            <div class="modal-footer">
+              <button class="btn btn-outline" id="skill-modal-cancel">iptal</button>
+              <button class="btn btn-primary" id="skill-save-btn">kaydet</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── Tab: Projects ── -->
+      <div id="tab-projects" class="tab-panel">
+        <div class="panel-header">
+          <h1>Projeler</h1>
+          <div class="panel-actions">
+            <button class="btn btn-outline" id="github-fetch-trigger">github'dan çek</button>
+            <button class="btn btn-primary" id="add-project-btn">+ ekle</button>
+          </div>
+        </div>
+
+        <!-- GitHub Fetch UI (Gizli) -->
+        <div id="github-importer" style="display: none; margin-bottom: 24px; padding: 20px; background: rgba(255,255,255,0.02); border: 1px solid var(--border); border-radius: var(--radius-md);">
+          <div style="display: flex; gap: 10px; margin-bottom: 16px;">
+            <input type="text" id="github-username" placeholder="GitHub Kullanıcı Adı" style="flex: 1;">
+            <button class="btn btn-primary" id="github-fetch-btn">getir</button>
+            <button class="btn btn-outline" id="github-import-close">kapat</button>
+          </div>
+          <div id="github-repos-list" class="items-list" style="max-height: 300px; overflow-y: auto; border-top: 1px solid var(--border); padding-top: 10px;">
+            <!-- Repolar buraya listelenecek -->
+          </div>
+        </div>
+
+        <div id="projects-list" class="items-list"></div>
+
+        <!-- Project Modal -->
+        <div id="project-modal" class="modal" style="display:none">
+          <div class="modal-box modal-box-lg">
+            <div class="modal-header">
+              <h2 id="project-modal-title">Proje Ekle</h2>
+              <button class="modal-close" id="project-modal-close">✕</button>
+            </div>
+            <div class="form-grid">
+              <div class="field-group">
+                <label>Başlık (TR)</label>
+                <input type="text" id="project-title-tr" placeholder="Proje Adı">
+              </div>
+              <div class="field-group">
+                <label>Başlık (EN)</label>
+                <input type="text" id="project-title-en" placeholder="Project Name">
+              </div>
+              <div class="field-group span-2">
+                <label>Açıklama (TR)</label>
+                <textarea id="project-desc-tr" rows="3"></textarea>
+              </div>
+              <div class="field-group span-2">
+                <label>Açıklama (EN)</label>
+                <textarea id="project-desc-en" rows="3"></textarea>
+              </div>
+              <div class="field-group span-2">
+                <label>Görseli URL</label>
+                <input type="url" id="project-image-url" placeholder="https://...">
+              </div>
+              <div class="field-group">
+                <label>Live URL</label>
+                <input type="url" id="project-live-url" placeholder="https://...">
+              </div>
+              <div class="field-group">
+                <label>GitHub URL</label>
+                <input type="url" id="project-github-url" placeholder="https://github.com/...">
+              </div>
+              <div class="field-group span-2">
+                <label>Etiketler (virgülle ayır)</label>
+                <input type="text" id="project-tags" placeholder="React, Firebase, Tailwind">
+              </div>
+              <div class="field-group">
+                <label>Sıra</label>
+                <input type="number" id="project-order" placeholder="1" min="0">
+              </div>
+              <div class="field-group">
+                <label class="checkbox-label" style="margin-top: 24px;">
+                  <input type="checkbox" id="project-featured">
+                  <span>Öne çıkan proje</span>
+                </label>
+              </div>
+            </div>
+            <input type="hidden" id="project-edit-id">
+            <div class="modal-footer">
+              <button class="btn btn-outline" id="project-modal-cancel">iptal</button>
+              <button class="btn btn-primary" id="project-save-btn">kaydet</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── Tab: Experience ── -->
+      <div id="tab-experience" class="tab-panel">
+        <div class="panel-header">
+          <h1>Deneyim</h1>
+          <button class="btn btn-primary" id="add-exp-btn">+ ekle</button>
+        </div>
+        <div id="experience-list-admin" class="items-list"></div>
+
+        <!-- Experience Modal -->
+        <div id="exp-modal" class="modal" style="display:none">
+          <div class="modal-box modal-box-lg">
+            <div class="modal-header">
+              <h2 id="exp-modal-title">Deneyim Ekle</h2>
+              <button class="modal-close" id="exp-modal-close">✕</button>
+            </div>
+            <div class="form-grid">
+              <div class="field-group span-2">
+                <label>Şirket</label>
+                <input type="text" id="exp-company" placeholder="Şirket Adı">
+              </div>
+              <div class="field-group">
+                <label>Pozisyon (TR)</label>
+                <input type="text" id="exp-role-tr" placeholder="Frontend Developer">
+              </div>
+              <div class="field-group">
+                <label>Pozisyon (EN)</label>
+                <input type="text" id="exp-role-en" placeholder="Frontend Developer">
+              </div>
+              <div class="field-group span-2">
+                <label>Açıklama (TR)</label>
+                <textarea id="exp-desc-tr" rows="3"></textarea>
+              </div>
+              <div class="field-group span-2">
+                <label>Açıklama (EN)</label>
+                <textarea id="exp-desc-en" rows="3"></textarea>
+              </div>
+              <div class="field-group">
+                <label>Başlangıç Tarihi</label>
+                <input type="date" id="exp-start-date">
+              </div>
+              <div class="field-group">
+                <label>Bitiş Tarihi</label>
+                <input type="date" id="exp-end-date">
+              </div>
+              <div class="field-group span-2">
+                <label class="checkbox-label">
+                  <input type="checkbox" id="exp-current">
+                  <span>Hâlâ devam ediyor</span>
+                </label>
+              </div>
+            </div>
+            <input type="hidden" id="exp-edit-id">
+            <div class="modal-footer">
+              <button class="btn btn-outline" id="exp-modal-cancel">iptal</button>
+              <button class="btn btn-primary" id="exp-save-btn">kaydet</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── Tab: Education ── -->
+      <div id="tab-education" class="tab-panel">
+        <div class="panel-header">
+          <h1>Eğitim</h1>
+          <button class="btn btn-primary" id="add-edu-btn">+ ekle</button>
+        </div>
+        <div id="education-list-admin" class="items-list"></div>
+
+        <!-- Education Modal -->
+        <div id="edu-modal" class="modal" style="display:none">
+          <div class="modal-box modal-box-lg">
+            <div class="modal-header">
+              <h2 id="edu-modal-title">Eğitim Ekle</h2>
+              <button class="modal-close" id="edu-modal-close">✕</button>
+            </div>
+            <div class="form-grid">
+              <div class="field-group span-2">
+                <label>Okul / Üniversite Adı</label>
+                <input type="text" id="edu-school" placeholder="Örn: Manisa Celal Bayar Üniversitesi">
+              </div>
+              <div class="field-group">
+                <label>Bölüm / Derece (TR)</label>
+                <input type="text" id="edu-degree-tr" placeholder="Örn: Bilgisayar Mühendisliği">
+              </div>
+              <div class="field-group">
+                <label>Bölüm / Derece (EN)</label>
+                <input type="text" id="edu-degree-en" placeholder="Örn: Computer Engineering">
+              </div>
+              <div class="field-group">
+                <label>Başlangıç Tarihi</label>
+                <input type="text" id="edu-start-date" placeholder="09.2022">
+              </div>
+              <div class="field-group">
+                <label>Bitiş Tarihi (veya Beklenen)</label>
+                <input type="text" id="edu-end-date" placeholder="01.2026">
+              </div>
+              <div class="field-group">
+                <label>GANO / Not Ortalaması</label>
+                <input type="text" id="edu-grade" placeholder="3.38 / 4">
+              </div>
+              <div class="field-group">
+                <label>Sıralama (Order)</label>
+                <input type="number" id="edu-order" placeholder="0">
+              </div>
+            </div>
+            <input type="hidden" id="edu-edit-id">
+            <div class="modal-footer">
+              <button class="btn btn-outline" id="edu-modal-cancel">iptal</button>
+              <button class="btn btn-primary" id="edu-save-btn">kaydet</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── Tab: Contact ── -->
+      <div id="tab-contact" class="tab-panel">
+        <div class="panel-header">
+          <h1>İletişim</h1>
+          <button class="btn btn-primary" id="save-contact">kaydet</button>
+        </div>
+        <div class="form-grid">
+          <div class="field-group span-2">
+            <label>E-posta</label>
+            <input type="email" id="contact-email" placeholder="ornek@mail.com">
+          </div>
+          <div class="field-group">
+            <label>Konum (TR)</label>
+            <input type="text" id="contact-location-tr" placeholder="İstanbul, Türkiye">
+          </div>
+          <div class="field-group">
+            <label>Konum (EN)</label>
+            <input type="text" id="contact-location-en" placeholder="Istanbul, Turkey">
+          </div>
+          <div class="field-group span-2">
+            <label>Alt Başlık / Açıklama (TR)</label>
+            <textarea id="contact-desc-tr" rows="3" placeholder="Benimle iletişime geçmekten çekinme..."></textarea>
+          </div>
+          <div class="field-group span-2">
+            <label>Alt Başlık / Açıklama (EN)</label>
+            <textarea id="contact-desc-en" rows="3" placeholder="Feel free to reach out..."></textarea>
+          </div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <script type="module" src="admin.js"></script>
+</body>
+
+</html>
